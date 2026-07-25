@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Ironman Training</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{
+    --bg:#0f0f0f;
+    --surface:#1a1a1a;
+    --surface2:#242424;
+    --border:#2e2e2e;
+    --text:#f0f0f0;
+    --muted:#888;
+    --run:#3b82f6;
+    --swim:#10b981;
+    --bike:#f59e0b;
+    --gym:#a78bfa;
+    --assault:#f97316;
+    --stretch:#ec4899;
+    --mobility:#94a3b8;
+    --accent:#3b82f6;
+  }
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;max-width:480px;margin:0 auto;padding-bottom:80px}
+  header{padding:20px 16px 12px;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
+  .header-top{display:flex;align-items:center;justify-content:space-between}
+  h1{font-size:18px;font-weight:600;letter-spacing:-.3px}
+  .days-until{font-size:12px;color:var(--muted);margin-top:3px}
+  .days-count{color:var(--accent);font-weight:600}
+  .day-tabs{display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .day-tabs::-webkit-scrollbar{display:none}
+  .tab{flex-shrink:0;padding:6px 10px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-align:center;line-height:1.3}
+  .tab.active{color:#fff;border-color:transparent}
+  .tab-day{display:block}
+  .tab-date{display:block;font-size:10px;opacity:.8}
+  main{padding:12px 16px}
+  .day-header{margin-bottom:14px}
+  .day-name{font-size:22px;font-weight:700;letter-spacing:-.5px}
+  .day-subtitle{font-size:13px;color:var(--muted);margin-top:2px}
+  .session{border-radius:12px;margin-bottom:10px;overflow:hidden;border:1px solid var(--border)}
+  .session-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
+  .session-color{width:4px;height:40px;border-radius:2px;flex-shrink:0}
+  .session-meta{flex:1}
+  .session-time{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+  .session-title{font-size:15px;font-weight:600}
+  .session-summary{font-size:12px;color:var(--muted);margin-top:2px}
+  .session-chevron{font-size:18px;color:var(--muted);transition:transform .2s}
+  .session-chevron.open{transform:rotate(180deg)}
+  .session-detail{padding:0 14px 14px;font-size:13px;line-height:1.6;color:#ccc;display:none}
+  .session-detail.open{display:block}
+  .detail-block{border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;line-height:1.7;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.06)}
+  .detail-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+  .zpill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-top:6px}
+  .z2{background:#052e16;color:#4ade80}
+  .z3{background:#431407;color:#fb923c}
+  .z4{background:#450a0a;color:#f87171}
+  .zt{background:#1e1b4b;color:#a5b4fc}
+  .log-btn{width:100%;margin-top:10px;padding:9px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;text-align:left}
+  .log-btn.done{border-color:#10b981;color:#10b981;background:#052e16}
+  .log-area{width:100%;margin-top:8px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text);font-size:13px;resize:none;font-family:inherit;display:none}
+  .log-area.open{display:block}
+  .save-btn{margin-top:6px;padding:7px 14px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:500;cursor:pointer;display:none}
+  .save-btn.open{display:inline-block}
+  .nightly{background:var(--surface);border-radius:12px;padding:14px;border:1px solid var(--border);margin-top:4px}
+  .nightly-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .nightly-items{display:flex;flex-wrap:wrap;gap:6px}
+  .nightly-pill{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--surface2);color:#ccc;border:1px solid var(--border)}
+  .rest-card{background:var(--surface);border-radius:12px;padding:20px;text-align:center;border:1px solid var(--border);margin-bottom:10px}
+  .rest-emoji{font-size:36px;margin-bottom:8px}
+  .rest-title{font-size:16px;font-weight:600;margin-bottom:4px}
+  .rest-sub{font-size:13px;color:var(--muted);line-height:1.5}
+  .race-banner{background:rgba(30,58,95,.4);border:1px solid rgba(59,130,246,.3);border-radius:12px;padding:14px;margin-bottom:14px}
+  .race-label-top{font-size:10px;color:#60a5fa;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .race-item{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .race-item:last-child{border-bottom:none}
+  .race-icon{font-size:16px;width:24px;text-align:center}
+  .race-name{font-size:13px;font-weight:500;flex:1}
+  .race-date{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div>
+      <h1>Ironman Training</h1>
+      <div class="days-until"><span class="days-count" id="daysCount">—</span> days to race day · Mar 6, 2027</div>
+    </div>
+  </div>
+  <div class="day-tabs" id="dayTabs"></div>
+</header>
+<main id="main"></main>
+<script>
+const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const DAY_COLORS={Monday:'#3b82f6',Tuesday:'#10b981',Wednesday:'#f59e0b',Thursday:'#3b82f6',Friday:'#10b981',Saturday:'#f59e0b',Sunday:'#6b7280'};
+const DAY_TINTS={Monday:'rgba(59,130,246,.07)',Tuesday:'rgba(16,185,129,.07)',Wednesday:'rgba(245,158,11,.07)',Thursday:'rgba(59,130,246,.07)',Friday:'rgba(16,185,129,.07)',Saturday:'rgba(245,158,11,.07)',Sunday:'rgba(107,114,128,.05)'};
+
+const PLAN={
+  Monday:{subtitle:'Spin + threshold run + gym',sessions:[
+    {time:'AM',title:'Wake-up mobility',color:'#94a3b8',summary:'Active stretch · pull-ups · push-ups',detail:'Active stretch 5 min → banded pull-ups 2x8 → push-ups 2x10',zone:null},
+    {time:'AM',title:'Indoor spin — Rouvy',color:'#f59e0b',summary:'30 min easy Z2 · 85-90 RPM',detail:'30 min easy route on Rouvy. Smooth cadence 85-90 RPM, just legs moving. No intensity — this is activation only.',zone:'z2'},
+    {time:'PM',title:'Threshold run',color:'#3b82f6',summary:'Pyramid / tempo cruise / sprint (alternate)',detail:'<strong>Week A — Pyramid:</strong> 10 min warm-up → 2/4/6/4/2 min Z4 with equal recovery jog → 10 min cool-down<br><br><strong>Week B — Tempo cruise:</strong> 10 min warm-up → 4x8 min Z3 with 2 min float recovery → 5 min cool-down<br><br><strong>Twice a month — Sprint set:</strong> 10 min warm-up → 8x 45 sec hard / 90 sec jog → 10 min cool-down',zone:'z4'},
+    {time:'PM',title:'Gym — legs',color:'#a78bfa',summary:'Box jumps · squats · BSS · step down · calf',detail:'Box jumps 3x5 → Back squats 3x4 heavy → Bulgarian split squats 3x8 → Single leg step down 3x10 → Lateral lunge 3x10 → Single leg hip bridge 3x12 → Bent knee calf raises 3x15 slow eccentric → Copenhagen raises 3x8',zone:null},
+  ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch']},
+
+  Tuesday:{subtitle:'Assault bike + swim technique',sessions:[
+    {time:'AM',title:'Split squat jumps + assault bike',color:'#f97316',summary:'8x 20s max / 10s rest + finisher',detail:'Split squat jumps 2x8 each leg → 8x 20 sec max effort / 10 sec rest → Push-ups 2x10 → Single leg RDL 3x10 → Skater jumps 2x10 each side',zone:null},
+    {time:'PM',title:'Swim — technique',color:'#10b981',summary:'~2.2km · drill or interval session',detail:'<div class="detail-block"><div class="detail-label">Session A — drill focus</div>400m easy warm-up → 4x50m catch-up drill (15s rest) → 4x50m fingertip drag (15s rest) → 4x50m bilateral breathing (15s rest) → 6x100m on 1:45 send-off, hold 1:35 pace → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Session B — threshold intervals</div>400m easy → 4x200m on 3:30 send-off strong → 4x100m on 1:45 fast → 8x25m sprint on 45 sec → 200m cool-down</div>',zone:'zt'},
+  ],nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)']},
+
+  Wednesday:{subtitle:'Stretch + bike threshold',sessions:[
+    {time:'AM',title:'Morning mobility + Copenhagen',color:'#ec4899',summary:'15 min · calf · hips · spine',detail:"Cat-cow 10 reps → Child's pose 30 sec → Seated spinal twist 30 sec each → Standing hip flexor lunge 30 sec each → Bent-knee calf stretch (soleus) 30 sec each → Copenhagen raises 3x8 → Tib raises 3x20 → Straight calf raises 2x15",zone:null},
+    {time:'PM',title:'Bike threshold',color:'#f59e0b',summary:'Over-unders or hill repeats (alternate)',detail:'<strong>Week A — Over-unders (indoor):</strong> 10 min warm-up → 3 sets of (3 min Z3 / 1 min Z4 / 3 min Z3 / 1 min Z4) with 5 min easy between → 10 min cool-down<br><br><strong>Week B — Hill repeats (outdoor):</strong> 4-5x climb (500m at 10% fading to 6-7%) with 1.5km easy recovery spin between. Total 60-75 min',zone:'z4'},
+  ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch']},
+
+  Thursday:{subtitle:'Assault bike + long run',sessions:[
+    {time:'AM',title:'Assault bike — power sprints',color:'#f97316',summary:'12x 20s max / 40s rest + finisher',detail:'12x 20 sec max effort / 40 sec full rest → Push-ups 2x10 → Single leg RDL 3x10 → Isometric split squat hold with calf raise 2x30 sec each leg → Tib raises 3x20',zone:null},
+    {time:'PM',title:'Long run — easy aerobic',color:'#3b82f6',summary:'Z2 only · build to 30km by Oct 1',detail:"Start at comfortable distance post half marathon (Aug 1). Add 1-2km weekly toward 30km by Oct 1. Flat route, minimise hills. Conversational pace — if you can't speak in sentences, slow down. Fuel and hydrate as race day. Calf check every 5km.",zone:'z2'},
+  ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch']},
+
+  Friday:{subtitle:'Sleep in + long swim + full stretch',sessions:[
+    {time:'AM',title:'5 min gentle wake-up only',color:'#94a3b8',summary:'Superman · thoracic rotation · squat hold',detail:"Superman 2x10 → Thoracic rotation stretch 30 sec each side → Deep squat hold 30 sec. Then back to bed or coffee — you've earned the sleep in.",zone:null},
+    {time:'PM',title:'Long swim',color:'#10b981',summary:'3-4km · choose a set or swim straight',detail:'<div class="detail-block"><div class="detail-label">Option A — speed broken set (~3km)</div>400m warm-up → 3x1000m broken as (800m strong / 100m fast / 100m easy) with 3 min rest between → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — endurance broken set (~3.2km)</div>400m warm-up → 4x600m on 90 sec rest, descend pace each rep → 4x100m on 20 sec rest strong → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Ignore both?</div>Just swim 3km non-stop easy. That\'s fine.</div>',zone:'z2'},
+    {time:'PM',title:'Full body stretch — post swim while warm',color:'#ec4899',summary:'20-30 min · hips · calves · back · spine',detail:"Cat-cow 10 reps → 90/90 hip stretch 60 sec each side → Pigeon pose 60 sec each → Standing hip flexor lunge 45 sec each → Hamstring seated stretch 45 sec each → Thoracic opener 60 sec → Soleus stretch bent-knee 45 sec each → Straight calf stretch 45 sec each → Child's pose 60 sec → Static Copenhagen plank hold 20-30 sec each side",zone:null},
+  ],nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)']},
+
+  Saturday:{subtitle:'Long ride · brick from August',sessions:[
+    {time:'AM',title:'Long outdoor ride',color:'#f59e0b',summary:'Z2 base · 25 km/h avg · fuel every 45 min',detail:'Mostly flat route, target 25 km/h average. Z2 for 80% of ride, allow Z3 on short climbs. Fuel every 45 min — practice race nutrition. Build distance weekly. <strong>From August:</strong> add 15-20 min easy brick run immediately off bike, no changing out of kit.',zone:'z2'},
+  ],nightly:['Push-ups','Tib raises','5 min stretch','(skip dips + pull-ups — rest upper body)']},
+
+  Sunday:{subtitle:'Full rest + weekly review',sessions:[],nightly:[]}
+};
+
+const UPCOMING=[
+  {icon:'🏃',name:'Half Marathon',date:'Aug 1, 2026'},
+  {icon:'🏊',name:'Olympic Tri',date:'Early Sept 2026'},
+  {icon:'🏃',name:'Full Marathon',date:'November 2026'},
+  {icon:'🚴',name:'70.3',date:'Mid Dec 2026'},
+  {icon:'🏅',name:'Ironman',date:'Mar 6, 2027'},
+];
+
+let activeDay=new Date().getDay();
+activeDay=activeDay===0?6:activeDay-1;
+
+function daysUntil(){
+  return Math.ceil((new Date('2027-03-06')-new Date())/(1000*60*60*24));
+}
+
+function getWeekDates(){
+  const now=new Date();
+  const day=now.getDay();
+  const monday=new Date(now);
+  monday.setDate(now.getDate()-(day===0?6:day-1));
+  return Array.from({length:7},(_,i)=>{
+    const d=new Date(monday);
+    d.setDate(monday.getDate()+i);
+    return d.getDate();
+  });
+}
+
+function getLog(day,i){try{return JSON.parse(localStorage.getItem(`log_${day}_${i}`)||'null')}catch{return null}}
+function setLog(day,i,data){try{localStorage.setItem(`log_${day}_${i}`,JSON.stringify(data))}catch{}}
+
+function renderTabs(){
+  const dates=getWeekDates();
+  const color=DAY_COLORS[DAYS[activeDay]];
+  document.getElementById('dayTabs').innerHTML=DAYS.map((d,i)=>`
+    <button class="tab ${i===activeDay?'active':''}" onclick="switchDay(${i})"
+      style="${i===activeDay?`background:${DAY_COLORS[d]};border-color:${DAY_COLORS[d]}`:''}">
+      <span class="tab-day">${d.slice(0,3)}</span>
+      <span class="tab-date">${dates[i]}</span>
+    </button>`).join('');
+}
+
+function switchDay(i){activeDay=i;renderTabs();renderDay()}
+
+function renderDay(){
+  const dayName=DAYS[activeDay];
+  const plan=PLAN[dayName];
+  const tint=DAY_TINTS[dayName];
+  const main=document.getElementById('main');
+
+  if(dayName==='Sunday'){
+    main.innerHTML=`
+      <div class="race-banner">
+        <div class="race-label-top">Upcoming milestones</div>
+        ${UPCOMING.map(r=>`<div class="race-item"><span class="race-icon">${r.icon}</span><span class="race-name">${r.name}</span><span class="race-date">${r.date}</span></div>`).join('')}
+      </div>
+      <div class="rest-card">
+        <div class="rest-emoji">😴</div>
+        <div class="rest-title">Full rest day</div>
+        <div class="rest-sub">Adaptation happens here.<br>Light walk only if needed.<br><br>Sunday PM — check in with Claude, review last week, plan the week ahead.</div>
+      </div>`;
+    return;
+  }
+
+  let html=`<div class="day-header"><div class="day-name">${dayName}</div><div class="day-subtitle">${plan.subtitle}</div></div>`;
+
+  plan.sessions.forEach((s,i)=>{
+    const log=getLog(dayName,i);
+    const isDone=log&&log.done;
+    html+=`
+    <div class="session" style="background:${tint}">
+      <div class="session-header" onclick="toggleSession('${dayName}',${i})">
+        <div class="session-color" style="background:${s.color}"></div>
+        <div class="session-meta">
+          <div class="session-time">${s.time}</div>
+          <div class="session-title">${s.title}</div>
+          <div class="session-summary">${s.summary}</div>
+        </div>
+        <div class="session-chevron" id="chev_${dayName}_${i}">⌄</div>
+      </div>
+      <div class="session-detail" id="det_${dayName}_${i}">
+        <div style="color:#ccc;font-size:13px;line-height:1.7">${s.detail}</div>
+        ${s.zone?`<span class="zpill ${s.zone}">${s.zone==='z2'?'Zone 2 — easy aerobic':s.zone==='z3'?'Zone 3 — tempo':s.zone==='z4'?'Zone 3-4 — threshold':'Technique focus'}</span>`:''}
+        <button class="log-btn ${isDone?'done':''}" id="logbtn_${dayName}_${i}" onclick="toggleLog('${dayName}',${i})">
+          ${isDone?'✓ Done — tap to edit':'Mark as done / add note'}
+        </button>
+        <textarea class="log-area" id="logarea_${dayName}_${i}" rows="3" placeholder="What did you actually do? Notes, how it felt, any deviations...">${log&&log.note?log.note:''}</textarea>
+        <button class="save-btn" id="savebtn_${dayName}_${i}" onclick="saveLog('${dayName}',${i})">Save</button>
+      </div>
+    </div>`;
+  });
+
+  if(plan.nightly.length){
+    html+=`<div class="nightly"><div class="nightly-title">Tonight</div><div class="nightly-items">${plan.nightly.map(n=>`<span class="nightly-pill">${n}</span>`).join('')}</div></div>`;
+  }
+  main.innerHTML=html;
+}
+
+function toggleSession(day,i){
+  document.getElementById(`det_${day}_${i}`).classList.toggle('open');
+  document.getElementById(`chev_${day}_${i}`).classList.toggle('open');
+}
+
+function toggleLog(day,i){
+  document.getElementById(`logarea_${day}_${i}`).classList.toggle('open');
+  document.getElementById(`savebtn_${day}_${i}`).classList.toggle('open');
+}
+
+function saveLog(day,i){
+  const note=document.getElementById(`logarea_${day}_${i}`).value;
+  setLog(day,i,{done:true,note});
+  const btn=document.getElementById(`logbtn_${day}_${i}`);
+  btn.className='log-btn done';
+  btn.textContent='✓ Done — tap to edit';
+  document.getElementById(`logarea_${day}_${i}`).classList.remove('open');
+  document.getElementById(`savebtn_${day}_${i}`).classList.remove('open');
+}
+
+document.getElementById('daysCount').textContent=daysUntil();
+renderTabs();
+renderDay();
+</script>
+</body>
+</html>
