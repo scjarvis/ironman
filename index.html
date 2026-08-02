@@ -24,6 +24,7 @@
   .day-header{margin-bottom:14px}
   .day-name{font-size:22px;font-weight:700;letter-spacing:-.5px}
   .day-subtitle{font-size:13px;color:var(--muted);margin-top:2px}
+  .week-note{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#fcd34d;line-height:1.5}
   .session{border-radius:12px;margin-bottom:10px;overflow:hidden;border:1px solid var(--border)}
   .session-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
   .session-color{width:4px;height:40px;border-radius:2px;flex-shrink:0}
@@ -51,11 +52,15 @@
   .nightly-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
   .nightly-items{display:flex;flex-wrap:wrap;gap:6px}
   .nightly-pill{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--surface2);color:#ccc;border:1px solid var(--border)}
+  .achilles-box{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:12px 14px;margin-top:10px}
+  .achilles-title{font-size:11px;font-weight:600;color:#fca5a5;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .achilles-item{font-size:12px;color:#fecaca;padding:4px 0;border-bottom:1px solid rgba(239,68,68,.15);line-height:1.5}
+  .achilles-item:last-child{border-bottom:none}
   .gear-section{background:var(--surface);border-radius:12px;padding:14px;border:1px solid var(--border);margin-top:10px}
   .gear-title{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
   .gear-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer}
   .gear-item:last-child{border-bottom:none}
-  .gear-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:11px;font-weight:600;color:#fff}
+  .gear-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;transition:all .15s}
   .gear-check.checked{background:#10b981;border-color:#10b981}
   .gear-name{font-size:13px;color:var(--text);transition:color .15s}
   .gear-name.checked{color:var(--muted);text-decoration:line-through}
@@ -95,6 +100,12 @@ const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunda
 const DAY_COLORS={Monday:'#3b82f6',Tuesday:'#10b981',Wednesday:'#f59e0b',Thursday:'#3b82f6',Friday:'#10b981',Saturday:'#f59e0b',Sunday:'#6b7280'};
 const DAY_TINTS={Monday:'rgba(59,130,246,.07)',Tuesday:'rgba(16,185,129,.07)',Wednesday:'rgba(245,158,11,.07)',Thursday:'rgba(59,130,246,.07)',Friday:'rgba(16,185,129,.07)',Saturday:'rgba(245,158,11,.07)',Sunday:'rgba(107,114,128,.05)'};
 
+const ACHILLES=[
+  'Eccentric heel drops — step edge, rise both feet, lower slowly on one. 3x15 each side',
+  'Isometric calf hold — rise onto toes, hold 30-45 sec. 3x each side',
+  'Soleus stretch — bent knee against wall, 45 sec each side. Repeat through the day'
+];
+
 const OATS_RECIPE={
   title:'🥣 Overnight oats — batch prep (6 jars)',
   step:'Mix all ingredients, divide into 6 jars, refrigerate overnight.',
@@ -103,51 +114,95 @@ const OATS_RECIPE={
 };
 
 const PLAN={
-  Monday:{subtitle:'Spin + threshold run + gym',sessions:[
-    {time:'AM',title:'Wake-up mobility',color:'#94a3b8',summary:'Active stretching and upper body activation',detail:'Active stretch 5 min → banded pull-ups 2x8 → push-ups 2x10',zone:null},
-    {time:'AM',title:'Indoor spin — Rouvy',color:'#f59e0b',summary:'Easy 30 min aerobic spin to wake the legs',detail:'30 min easy route on Rouvy. Smooth cadence 85-90 RPM, just legs moving. No intensity — activation only.',zone:'z2'},
-    {time:'PM',title:'Threshold run',color:'#3b82f6',summary:'Hard interval or tempo session — alternate weekly',detail:'<strong>Week A — Pyramid:</strong> 10 min warm-up → 2/4/6/4/2 min Z4 with equal recovery jog → 10 min cool-down<br><br><strong>Week B — Tempo cruise:</strong> 10 min warm-up → 4x8 min Z3 with 2 min float recovery → 5 min cool-down<br><br><strong>Twice a month — Sprint set:</strong> 10 min warm-up → 8x 45 sec hard / 90 sec jog → 10 min cool-down',zone:'z4'},
-    {time:'PM',title:'Gym — legs',color:'#a78bfa',summary:'Heavy compound lifting followed by plyometrics and calf work',detail:'Box jumps 3x5 → Back squats 3x4 heavy → Bulgarian split squats 3x8 → Single leg step down 3x10 → Lateral lunge 3x10 → Single leg hip bridge 3x12 → Bent knee calf raises 3x15 slow eccentric → Copenhagen raises 3x8',zone:null},
-  ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
-  gear:{label:'🎒 Pack tonight for tomorrow — swim',items:['Skins','Togs','Water bottle','Goggles','Towel','Spare clothes','Slides']},recipe:null},
+  Monday:{
+    subtitle:'Indoor spin + swim technique',
+    weekNote:'Recovery week post half marathon — Achilles management priority. Two evenings off this week.',
+    sessions:[
+      {time:'AM',title:'Wake-up mobility',color:'#94a3b8',summary:'Active stretching and upper body activation',detail:'Active stretch 5 min → banded pull-ups 2x8 → push-ups 2x10',zone:null},
+      {time:'AM',title:'Indoor spin — Rouvy',color:'#f59e0b',summary:'Easy 30 min aerobic spin to wake the legs',detail:'30 min easy route on Rouvy. Smooth cadence 85-90 RPM. No intensity — legs are recovering from Saturday.',zone:'z2'},
+      {time:'PM',title:'Swim — technique',color:'#10b981',summary:'Drill focus — easy session, no hard efforts',detail:'<div class="detail-block"><div class="detail-label">Session A — drill focus</div>400m easy warm-up → 4x50m catch-up drill (15s rest) → 4x50m fingertip drag (15s rest) → 4x50m bilateral breathing (15s rest) → 6x100m on 1:45 send-off, hold 1:35 pace → 200m cool-down</div>',zone:'zt'},
+    ],
+    nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)'],
+    achilles:true,
+    gear:{label:'🎒 Pack tonight for tomorrow — assault bike',items:['Gym clothes','Water bottle','Trainers']},
+    recipe:null
+  },
 
-  Tuesday:{subtitle:'Assault bike + swim technique',sessions:[
-    {time:'AM',title:'Split squat jumps + assault bike',color:'#f97316',summary:'Power and conditioning — max effort sprints',detail:'Split squat jumps 2x8 each leg → 8x 20 sec max effort / 10 sec rest → Push-ups 2x10 → Single leg RDL 3x10 → Skater jumps 2x10 each side',zone:null},
-    {time:'PM',title:'Swim — technique',color:'#10b981',summary:'Drill or interval session focused on stroke improvement',detail:'<div class="detail-block"><div class="detail-label">Session A — drill focus</div>400m easy warm-up → 4x50m catch-up drill (15s rest) → 4x50m fingertip drag (15s rest) → 4x50m bilateral breathing (15s rest) → 6x100m on 1:45 send-off, hold 1:35 pace → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Session B — threshold intervals</div>400m easy → 4x200m on 3:30 send-off strong → 4x100m on 1:45 fast → 8x25m sprint on 45 sec → 200m cool-down</div>',zone:'zt'},
-  ],nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)'],
-  gear:null,recipe:null},
+  Tuesday:{
+    subtitle:'Assault bike — evening off',
+    weekNote:'Recovery week — evening off tonight. Let the body absorb Saturday\'s effort.',
+    sessions:[
+      {time:'AM',title:'Split squat jumps + assault bike',color:'#f97316',summary:'Power and conditioning — max effort sprints',detail:'Split squat jumps 2x8 each leg → 8x 20 sec max effort / 10 sec rest → Push-ups 2x10 → Single leg RDL 3x10 → Skater jumps 2x10 each side',zone:null},
+    ],
+    nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
+    achilles:true,
+    gear:null,
+    recipe:null
+  },
 
-  Wednesday:{subtitle:'Stretch + bike threshold',sessions:[
-    {time:'AM',title:'Morning mobility + Copenhagen',color:'#ec4899',summary:'Hip, calf and spine mobility with Copenhagen raises',detail:"Cat-cow 10 reps → Child's pose 30 sec → Seated spinal twist 30 sec each → Standing hip flexor lunge 30 sec each → Bent-knee calf stretch (soleus) 30 sec each → Copenhagen raises 3x8 → Tib raises 3x20 → Straight calf raises 2x15",zone:null},
-    {time:'PM',title:'Bike threshold',color:'#f59e0b',summary:'Over-unders indoors or hill repeats outdoors — alternate weekly',detail:'<strong>Week A — Over-unders (indoor):</strong> 10 min warm-up → 3 sets of (3 min Z3 / 1 min Z4 / 3 min Z3 / 1 min Z4) with 5 min easy between → 10 min cool-down<br><br><strong>Week B — Hill repeats (outdoor):</strong> 4-5x climb (500m at 10% fading to 6-7%) with 1.5km easy recovery spin between. Total 60-75 min',zone:'z4'},
-  ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
-  gear:{label:'🎒 Pack tonight for tomorrow — long run',items:['Running shoes','Gels','Water flask + electrolytes','Long sleeve run top','Shorts','Vaseline']},recipe:null},
+  Wednesday:{
+    subtitle:'Morning mobility — evening off',
+    weekNote:'Recovery week — evening off tonight. Full bike threshold resumes next week.',
+    sessions:[
+      {time:'AM',title:'Morning mobility + Copenhagen',color:'#ec4899',summary:'Hip, calf and spine mobility with Copenhagen raises',detail:"Cat-cow 10 reps → Child's pose 30 sec → Seated spinal twist 30 sec each → Standing hip flexor lunge 30 sec each → Bent-knee calf stretch (soleus) 30 sec each → Copenhagen raises 3x8 → Tib raises 3x20 → Straight calf raises 2x15",zone:null},
+    ],
+    nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
+    achilles:true,
+    gear:{label:'🎒 Pack tonight for tomorrow — easy run + gym',items:['Running shoes','Water bottle','Gym clothes','Towel']},
+    recipe:null
+  },
 
-  Thursday:{subtitle:'Assault bike + long run',sessions:[
-    {time:'AM',title:'Assault bike — power sprints',color:'#f97316',summary:'Longer rest, true max effort — 12 rounds',detail:'12x 20 sec max effort / 40 sec full rest → Push-ups 2x10 → Single leg RDL 3x10 → Isometric split squat hold with calf raise 2x30 sec each leg → Tib raises 3x20',zone:null},
-    {time:'PM',title:'Long run — easy aerobic',color:'#3b82f6',summary:'Base building run — Z2 only, build distance weekly',detail:"Start at comfortable distance post half marathon (Aug 1). Add 1-2km weekly toward 30km by Oct 1. Flat route, minimise hills. Conversational pace throughout. Fuel and hydrate as race day. Calf check every 5km.",zone:'z2'},
-  ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
-  gear:{label:'🎒 Pack tonight for tomorrow — swim',items:['Skins','Togs','Water bottle','Goggles','Towel','Spare clothes','Slides']},recipe:null},
+  Thursday:{
+    subtitle:'Assault bike + easy run + gym',
+    weekNote:'Keep the run easy and short — 4-5km flat only. Stop if Achilles tightens.',
+    sessions:[
+      {time:'AM',title:'Assault bike — power sprints',color:'#f97316',summary:'Longer rest, true max effort — 12 rounds',detail:'12x 20 sec max effort / 40 sec full rest → Push-ups 2x10 → Single leg RDL 3x10 → Isometric split squat hold with calf raise 2x30 sec each leg → Tib raises 3x20',zone:null},
+      {time:'PM',title:'Easy run — Achilles check',color:'#3b82f6',summary:'4-5km flat and easy — stop if any tightness',detail:'4-5km on flat ground only. Genuinely easy pace — no targets. If Achilles tightens at any point, walk and stop for the day. This is a test run, not a training run.',zone:'z2'},
+      {time:'PM',title:'Gym — legs (full Monday session)',color:'#a78bfa',summary:'Full compound leg session after run',detail:'Box jumps 3x5 → Back squats 3x4 heavy → Bulgarian split squats 3x8 → Single leg step down 3x10 → Lateral lunge 3x10 → Single leg hip bridge 3x12 → Bent knee calf raises 3x15 slow eccentric → Copenhagen raises 3x8',zone:null},
+    ],
+    nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
+    achilles:true,
+    gear:{label:'🎒 Pack tonight for tomorrow — swim',items:['Skins','Togs','Water bottle','Goggles','Towel','Spare clothes','Slides']},
+    recipe:null
+  },
 
-  Friday:{subtitle:'Sleep in + long swim + full stretch',sessions:[
-    {time:'AM',title:'5 min gentle wake-up only',color:'#94a3b8',summary:'Minimal movement — rest is the priority this morning',detail:"Superman 2x10 → Thoracic rotation stretch 30 sec each side → Deep squat hold 30 sec. Then back to bed or coffee.",zone:null},
-    {time:'PM',title:'Long swim',color:'#10b981',summary:'3-4km aerobic swim — choose a set or go straight',detail:'<div class="detail-block"><div class="detail-label">Option A — speed broken set (~3km)</div>400m warm-up → 3x1000m broken as (800m strong / 100m fast / 100m easy) with 3 min rest between → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — endurance broken set (~3.2km)</div>400m warm-up → 4x600m on 90 sec rest, descend pace each rep → 4x100m on 20 sec rest strong → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Ignore both?</div>Just swim 3km non-stop easy.</div>',zone:'z2'},
-    {time:'PM',title:'Full body stretch — post swim while warm',color:'#ec4899',summary:'20-30 min full body — hips, calves, spine and back',detail:"Cat-cow 10 reps → 90/90 hip stretch 60 sec each side → Pigeon pose 60 sec each → Standing hip flexor lunge 45 sec each → Hamstring seated stretch 45 sec each → Thoracic opener 60 sec → Soleus stretch bent-knee 45 sec each → Straight calf stretch 45 sec each → Child's pose 60 sec → Static Copenhagen plank hold 20-30 sec each side",zone:null},
-  ],nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)'],
-  gear:{label:'🎒 Pack tonight for tomorrow — long ride',items:['Gels','Bars and lollies','Water bottle','Lights','Repair bag','Sunglasses','Bumbag (ride essentials)','Nutrition bag (food + fuel)']},recipe:null},
+  Friday:{
+    subtitle:'Sleep in + long swim + full stretch',
+    weekNote:'Back to normal Friday. Long swim as planned — good aerobic work with zero Achilles load.',
+    sessions:[
+      {time:'AM',title:'5 min gentle wake-up only',color:'#94a3b8',summary:'Minimal movement — rest is the priority this morning',detail:"Superman 2x10 → Thoracic rotation stretch 30 sec each side → Deep squat hold 30 sec. Then back to bed or coffee.",zone:null},
+      {time:'PM',title:'Long swim',color:'#10b981',summary:'3-4km aerobic swim — choose a set or go straight',detail:'<div class="detail-block"><div class="detail-label">Option A — speed broken set (~3km)</div>400m warm-up → 3x1000m broken as (800m strong / 100m fast / 100m easy) with 3 min rest between → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — endurance broken set (~3.2km)</div>400m warm-up → 4x600m on 90 sec rest, descend pace each rep → 4x100m on 20 sec rest strong → 200m cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Ignore both?</div>Just swim 3km non-stop easy.</div>',zone:'z2'},
+      {time:'PM',title:'Full body stretch — post swim while warm',color:'#ec4899',summary:'20-30 min full body — hips, calves, spine and back',detail:"Cat-cow 10 reps → 90/90 hip stretch 60 sec each side → Pigeon pose 60 sec each → Standing hip flexor lunge 45 sec each → Hamstring seated stretch 45 sec each → Thoracic opener 60 sec → Soleus stretch bent-knee 45 sec each → Straight calf stretch 45 sec each → Child's pose 60 sec → Static Copenhagen plank hold 20-30 sec each side",zone:null},
+    ],
+    nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)'],
+    achilles:true,
+    gear:{label:'🎒 Pack tonight for tomorrow — long ride',items:['Gels','Bars and lollies','Water bottle','Lights','Repair bag','Sunglasses','Bumbag (ride essentials)','Nutrition bag (food + fuel)']},
+    recipe:null
+  },
 
-  Saturday:{subtitle:'Long ride · brick from August',sessions:[
-    {time:'AM',title:'Long outdoor ride',color:'#f59e0b',summary:'Z2 endurance ride — build distance, practice nutrition',detail:'Mostly flat route, target 25 km/h average. Z2 for 80% of ride, allow Z3 on short climbs. Fuel every 45 min — practice race nutrition. Build distance weekly. <strong>From August:</strong> add 15-20 min easy brick run immediately off bike.',zone:'z2'},
-  ],nightly:['Push-ups','Tib raises','5 min stretch','(skip dips + pull-ups — rest upper body)'],
-  gear:null,recipe:null},
+  Saturday:{
+    subtitle:'Long ride',
+    weekNote:'Back to normal Saturday. Achilles unloaded on the bike — good chance to push the ride.',
+    sessions:[
+      {time:'AM',title:'Long outdoor ride',color:'#f59e0b',summary:'Z2 endurance ride — build distance, practice nutrition',detail:'Mostly flat route, target 25 km/h average. Z2 for 80% of ride, allow Z3 on short climbs. Fuel every 45 min — practice race nutrition. Build distance weekly.',zone:'z2'},
+    ],
+    nightly:['Push-ups','Tib raises','5 min stretch','(skip dips + pull-ups — rest upper body)'],
+    achilles:true,
+    gear:null,
+    recipe:null
+  },
 
-  Sunday:{subtitle:'Full rest + weekly review',sessions:[],nightly:[],
-  gear:{label:'🎒 Pack tonight for tomorrow — run + gym + sauna',items:['Running shoes','Water bottle + electrolytes','Running/gym clothes','Towel','Spare clothes (post sauna)','Slides']},
-  recipe:OATS_RECIPE}
+  Sunday:{
+    subtitle:'Full rest + weekly review',
+    sessions:[],
+    nightly:[],
+    achilles:false,
+    gear:{label:'🎒 Pack tonight for tomorrow — run + gym + sauna',items:['Running shoes','Water bottle + electrolytes','Running/gym clothes','Towel','Spare clothes (post sauna)','Slides']},
+    recipe:OATS_RECIPE
+  }
 };
 
 const UPCOMING=[
-  {icon:'🏃',name:'Half Marathon',date:'Aug 1, 2026'},
   {icon:'🏊',name:'Olympic Tri',date:'Early Sept 2026'},
   {icon:'🏃',name:'Full Marathon',date:'November 2026'},
   {icon:'🚴',name:'70.3',date:'Mid Dec 2026'},
@@ -200,22 +255,14 @@ function renderDay(){
         <div class="rest-title">Full rest day</div>
         <div class="rest-sub">Adaptation happens here. Light walk only if needed.<br><br>Sunday PM — check in with Claude, review last week, plan the week ahead.</div>
       </div>`;
-
     if(plan.gear){
       const checked=getGear(dayName);
       html+=`<div class="gear-section">
         <div class="gear-title">${plan.gear.label}</div>
-        ${plan.gear.items.map((item,i)=>{
-          const isChecked=checked.includes(i);
-          return`<div class="gear-item" onclick="toggleGear('${dayName}',${i})">
-            <div class="gear-check ${isChecked?'checked':''}" id="gcheck_${dayName}_${i}">${isChecked?'✓':''}</div>
-            <span class="gear-name ${isChecked?'checked':''}" id="gname_${dayName}_${i}">${item}</span>
-          </div>`;
-        }).join('')}
+        ${plan.gear.items.map((item,i)=>{const isC=checked.includes(i);return`<div class="gear-item" onclick="toggleGear('${dayName}',${i})"><div class="gear-check ${isC?'checked':''}" id="gcheck_${dayName}_${i}">${isC?'✓':''}</div><span class="gear-name ${isC?'checked':''}" id="gname_${dayName}_${i}">${item}</span></div>`;}).join('')}
         <span class="gear-reset" onclick="resetGear('${dayName}')">Reset list</span>
       </div>`;
     }
-
     if(plan.recipe){
       const r=plan.recipe;
       html+=`<div class="recipe-section">
@@ -226,12 +273,15 @@ function renderDay(){
         <div class="macro-row">${r.macros.map(m=>`<span class="macro-pill">${m}</span>`).join('')}</div>
       </div>`;
     }
-
     main.innerHTML=html;
     return;
   }
 
   let html=`<div class="day-header"><div class="day-name">${dayName}</div><div class="day-subtitle">${plan.subtitle}</div></div>`;
+
+  if(plan.weekNote){
+    html+=`<div class="week-note">⚠️ ${plan.weekNote}</div>`;
+  }
 
   plan.sessions.forEach((s,i)=>{
     const log=getLog(dayName,i);
@@ -263,17 +313,18 @@ function renderDay(){
     html+=`<div class="nightly"><div class="nightly-title">Tonight</div><div class="nightly-items">${plan.nightly.map(n=>`<span class="nightly-pill">${n}</span>`).join('')}</div></div>`;
   }
 
+  if(plan.achilles){
+    html+=`<div class="achilles-box">
+      <div class="achilles-title">🦶 Achilles rehab — every night this week</div>
+      ${ACHILLES.map(a=>`<div class="achilles-item">${a}</div>`).join('')}
+    </div>`;
+  }
+
   if(plan.gear){
     const checked=getGear(dayName);
     html+=`<div class="gear-section">
       <div class="gear-title">${plan.gear.label}</div>
-      ${plan.gear.items.map((item,i)=>{
-        const isChecked=checked.includes(i);
-        return`<div class="gear-item" onclick="toggleGear('${dayName}',${i})">
-          <div class="gear-check ${isChecked?'checked':''}" id="gcheck_${dayName}_${i}">${isChecked?'✓':''}</div>
-          <span class="gear-name ${isChecked?'checked':''}" id="gname_${dayName}_${i}">${item}</span>
-        </div>`;
-      }).join('')}
+      ${plan.gear.items.map((item,i)=>{const isC=checked.includes(i);return`<div class="gear-item" onclick="toggleGear('${dayName}',${i})"><div class="gear-check ${isC?'checked':''}" id="gcheck_${dayName}_${i}">${isC?'✓':''}</div><span class="gear-name ${isC?'checked':''}" id="gname_${dayName}_${i}">${item}</span></div>`;}).join('')}
       <span class="gear-reset" onclick="resetGear('${dayName}')">Reset list</span>
     </div>`;
   }
