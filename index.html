@@ -24,6 +24,7 @@
   .day-header{margin-bottom:14px}
   .day-name{font-size:22px;font-weight:700;letter-spacing:-.5px}
   .day-subtitle{font-size:13px;color:var(--muted);margin-top:2px}
+  .week-note{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#fcd34d;line-height:1.5}
   .session{border-radius:12px;margin-bottom:10px;overflow:hidden;border:1px solid var(--border)}
   .session-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
   .session-color{width:4px;height:40px;border-radius:2px;flex-shrink:0}
@@ -104,13 +105,13 @@ const OATS_RECIPE={
 };
 
 const PLAN={
-  Monday:{subtitle:'Bike + threshold run + gym',sessions:[
+  Monday:{subtitle:'Spin + threshold run + gym',sessions:[
     {time:'AM',title:'Wake-up mobility',color:'#94a3b8',summary:'Active stretching and upper body activation',
      detail:'Active stretch 5 min → banded pull-ups 2x8 → push-ups 2x10',zone:null},
     {time:'AM',title:'Indoor spin — structured aerobic',color:'#f59e0b',summary:'Light but purposeful — aerobic base without taxing the legs',
-     detail:'10 min easy warm-up → 5x (3 min Z3 / 2 min easy) → 5 min cool-down. Total ~35 min. Keep it controlled — this should feel manageable, not hard. You have a threshold run tonight.',zone:'z3'},
+     detail:'10 min easy warm-up → 5x (3 min Z3 / 2 min easy) → 5 min cool-down. Total ~35 min. Keep it controlled — you have a threshold run and gym tonight.',zone:'z3'},
     {time:'PM',title:'Threshold run — choose one',color:'#3b82f6',summary:'Three options — all under 45 min, alternate weekly',
-     detail:'<div class="detail-block"><div class="detail-label">Option A — Pyramid intervals</div>10 min warm-up → 2 min Z4 / 2 min easy → 4 min Z4 / 4 min easy → 6 min Z4 / 4 min easy → 4 min Z4 / 2 min easy → 2 min Z4 → 5 min cool-down. Total ~45 min</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — Tempo cruise</div>10 min warm-up → 4x8 min Z3 with 2 min float recovery → 5 min cool-down. Total ~45 min</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option C — 400m repeats</div>10 min warm-up → 10x 400m hard with 90 sec jog recovery → 5 min cool-down. Total ~40 min</div>',zone:'z4'},
+     detail:'<div class="detail-block"><div class="detail-label">Option A — Pyramid intervals</div>10 min warm-up → 2 min Z4 / 2 min easy → 4 min Z4 / 4 min easy → 6 min Z4 / 4 min easy → 4 min Z4 / 2 min easy → 2 min Z4 → 5 min cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — Tempo cruise</div>10 min warm-up → 4x8 min Z3 with 2 min float recovery → 5 min cool-down</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option C — 400m repeats</div>10 min warm-up → 10x 400m hard with 90 sec jog recovery → 5 min cool-down</div>',zone:'z4'},
     {time:'PM',title:'Gym — legs',color:'#a78bfa',summary:'Heavy compound lifting followed by plyometrics and calf work',
      detail:'Box jumps 3x5 → Back squats 3x4 heavy → Bulgarian split squats 3x8 → Single leg step down 3x10 → Lateral lunge 3x10 → Single leg hip bridge 3x12 → Bent knee calf raises 3x15 slow eccentric → Copenhagen raises 3x8',zone:null},
   ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
@@ -127,16 +128,17 @@ const PLAN={
   Wednesday:{subtitle:'Morning mobility + bike threshold',sessions:[
     {time:'AM',title:'Morning mobility + Copenhagen',color:'#ec4899',summary:'Hip, calf and spine mobility with Copenhagen raises',
      detail:"Cat-cow 10 reps → Child's pose 30 sec → Seated spinal twist 30 sec each → Standing hip flexor lunge 30 sec each → Bent-knee calf stretch (soleus) 30 sec each → Copenhagen raises 3x8 → Tib raises 3x20 → Straight calf raises 2x15",zone:null},
-    {time:'PM',title:'Bike threshold — choose based on weather',color:'#f59e0b',summary:'Over-unders indoors or hill repeats outdoors',
-     detail:'<div class="detail-block"><div class="detail-label">Option A — Over-unders (indoor, any weather)</div>10 min warm-up → 3 sets of (3 min Z3 / 1 min Z4 / 3 min Z3 / 1 min Z4) with 5 min easy between sets → 10 min cool-down. Total ~60 min. Focus: teaching your body to clear lactate while still working hard.</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — Hill repeats (outdoor, good weather)</div>4-5x climb up your local hill (500m at 10% fading to 6-7%) with 1.5km easy recovery spin between each. Total 60-75 min. Focus: quad strength and hill power for Taupo.</div>',zone:'z4'},
+    {time:'PM',title:'Bike threshold — choose based on weather',color:'#f59e0b',summary:'Over-unders recommended this week — legs recovering from 90km Saturday',
+     detail:'<div class="detail-block"><div class="detail-label">Option A — Over-unders (indoor) ⭐ recommended this week</div>10 min warm-up → 3 sets of (3 min Z3 / 1 min Z4 / 3 min Z3 / 1 min Z4) with 5 min easy between sets → 10 min cool-down. Total ~60 min. Controlled effort — lets legs recover while still driving adaptation.</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — Hill repeats (outdoor, good weather)</div>4-5x climb (500m at 10% fading to 6-7%) with 1.5km easy recovery spin between. Total 60-75 min.</div>',zone:'z4'},
   ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
-  gear:{label:'🎒 Pack tonight for tomorrow — long run',items:['Running shoes (NB 1080s)','Gels','Water flask + electrolytes','Long sleeve run top','Shorts','Vaseline']},recipe:null},
+  gear:{label:'🎒 Pack tonight for tomorrow — long run',items:['NB 1080s','Gels','Water flask + electrolytes','Long sleeve run top','Shorts','Vaseline']},recipe:null},
 
-  Thursday:{subtitle:'Assault bike + long run',sessions:[
+  Thursday:{subtitle:'Assault bike + long run',weekNote:'First proper run in the 1080s — go easy. Stop if calves tighten. 12km target but protecting the calves is more important than the distance.',
+  sessions:[
     {time:'AM',title:'Assault bike — power sprints',color:'#f97316',summary:'Longer rest, true max effort — 12 rounds',
      detail:'12x 20 sec max effort / 40 sec full rest → Push-ups 2x10 → Single leg RDL 3x10 → Isometric split squat hold with calf raise 2x30 sec each leg → Tib raises 3x20',zone:null},
-    {time:'PM',title:'Long run — easy aerobic',color:'#3b82f6',summary:'12.5km this week — Z2 only, flat route',
-     detail:'12.5km on flat ground. Conversational pace throughout — if you cannot speak in full sentences, slow down. Fuel at 45 min mark. Calf check every 5km. NB 1080s for this one. Build to 14km next week.',zone:'z2'},
+    {time:'PM',title:'Long run — easy aerobic',color:'#3b82f6',summary:'12km in NB 1080s — Z2 only, stop if calves tighten',
+     detail:'12km on flat ground in NB 1080s. The 1080s have a higher stack than you\'re used to — your calves need time to adapt to the geometry. Conversational pace throughout. If calves feel overstretched at any point, walk 2 min and stretch, then reassess. Stop and call it a day if it persists — protecting the calves matters more than hitting 12km this week. Build to 14km next week.',zone:'z2'},
   ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
   gear:{label:'🎒 Pack tonight for tomorrow — swim',items:['Skins','Togs','Water bottle','Goggles','Towel','Spare clothes','Slides']},recipe:null},
 
@@ -150,9 +152,10 @@ const PLAN={
   ],nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)'],
   gear:{label:'🎒 Pack tonight for tomorrow — long ride',items:['Gels','Bars and lollies','Water bottle','Lights','Repair bag','Sunglasses','Bumbag (ride essentials)','Nutrition bag (food + fuel)']},recipe:null},
 
-  Saturday:{subtitle:'Long ride 60km+ · brick run',sessions:[
-    {time:'AM',title:'Long outdoor ride + brick run',color:'#f59e0b',summary:'60km+ Z2 endurance ride then immediate brick run',
-     detail:'60km+ target. Mostly flat where possible, target 25 km/h average. Z2 for 80%, allow Z3 on climbs. Fuel every 45 min — practice race nutrition. Immediately off the bike: 15-20 min easy brick run, no changing kit. Note how legs feel transitioning from bike to run.',zone:'z2'},
+  Saturday:{subtitle:'Long ride 60-70km · brick run',weekNote:'Legs recovering from last week\'s 90km — keep this one to 60-70km, no stops if possible. Focus on consistent effort and fuelling rather than distance.',
+  sessions:[
+    {time:'AM',title:'Long outdoor ride + brick run',color:'#f59e0b',summary:'60-70km this week — controlled effort, no stops, practice fuelling',
+     detail:'60-70km target this week. Mostly flat, target 25 km/h average. Z2 for 80%, allow Z3 on climbs. Fuel every 45 min without stopping — practice grabbing from your BTA mount while moving. Add 15-20 min easy brick run immediately off bike.',zone:'z2'},
   ],nightly:['Push-ups','Tib raises','5 min stretch','(skip dips + pull-ups — rest upper body)'],
   gear:null,recipe:null},
 
@@ -162,7 +165,7 @@ const PLAN={
 };
 
 const UPCOMING=[
-  {icon:'🏊',name:'Olympic Tri',date:'Early Sept 2026'},
+  {icon:'🏊',name:'Olympic Tri test',date:'Late Sept 2026'},
   {icon:'🏃',name:'Full Marathon',date:'November 2026'},
   {icon:'🚴',name:'70.3',date:'Mid Dec 2026'},
   {icon:'🏅',name:'Ironman — Taupo',date:'Mar 6, 2027'},
@@ -192,7 +195,6 @@ function renderTabs(){
       <span class="tab-date">${dates[i]}</span>
     </button>`).join('');
 }
-
 function switchDay(i){activeDay=i;renderTabs();renderDay()}
 
 function renderDay(){
@@ -225,6 +227,7 @@ function renderDay(){
   }
 
   let html=`<div class="day-header"><div class="day-name">${dayName}</div><div class="day-subtitle">${plan.subtitle}</div></div>`;
+  if(plan.weekNote) html+=`<div class="week-note">⚠️ ${plan.weekNote}</div>`;
 
   plan.sessions.forEach((s,i)=>{
     const log=getLog(dayName,i);
@@ -235,12 +238,10 @@ function renderDay(){
   if(plan.nightly&&plan.nightly.length){
     html+=`<div class="nightly"><div class="nightly-title">Tonight</div><div class="nightly-items">${plan.nightly.map(n=>`<span class="nightly-pill">${n}</span>`).join('')}</div></div>`;
   }
-
   if(plan.gear){
     const checked=getGear(dayName);
     html+=`<div class="gear-section"><div class="gear-title">${plan.gear.label}</div>${plan.gear.items.map((item,i)=>{const isC=checked.includes(i);return`<div class="gear-item" onclick="toggleGear('${dayName}',${i})"><div class="gear-check ${isC?'checked':''}" id="gcheck_${dayName}_${i}">${isC?'✓':''}</div><span class="gear-name ${isC?'checked':''}" id="gname_${dayName}_${i}">${item}</span></div>`;}).join('')}<span class="gear-reset" onclick="resetGear('${dayName}')">Reset list</span></div>`;
   }
-
   main.innerHTML=html;
 }
 
