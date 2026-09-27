@@ -125,59 +125,58 @@ const STRETCH_ROUTINE=[
 ];
 
 const PLAN={
-  Monday:{subtitle:'Long run — legs permitting',
-  weekNote:'Quads still carrying yesterday\'s 109km — trust how the first 2km feel. 14-15km is the goal but cut to 10-11km without guilt if legs are heavy.',
-  sessions:[
-    {time:'AM',title:'Wake-up mobility',color:'#94a3b8',summary:'Active stretching and upper body activation',
-     detail:'Active stretch 5 min → banded pull-ups 2x8 → push-ups 2x10',zone:null},
-    {time:'AM',title:'Indoor spin — structured aerobic',color:'#f59e0b',summary:'Light but purposeful — aerobic base, legs first check',
-     detail:'10 min easy warm-up → 5x (3 min Z3 / 2 min easy) → 5 min cool-down. Total ~35 min. If legs feel wrecked on the spin, consider skipping the run entirely today.',zone:'z3'},
-    {time:'PM',title:'Long run — easy aerobic',color:'#3b82f6',summary:'14-15km target — cut early if quads are struggling',
-     detail:'14-15km on flat ground. Check in at 2km — if legs feel heavy and form is breaking down, turn around at 5-6km and call it a day. No heroics this week, you have Saturday\'s 120km ahead. Z2 throughout, conversational pace.',zone:'z2'},
+  Monday:{subtitle:'Early spin + long run',sessions:[
+    {time:'5:45 AM',title:'Wake-up mobility',color:'#94a3b8',summary:'Active stretching and upper body activation',
+     detail:'Active stretch 5 min → banded pull-ups 2x8 → push-ups 2x10 → tib raises 3x20',zone:null},
+    {time:'AM',title:'Indoor spin — recovery with Z3 middle',color:'#f59e0b',summary:'30 min — easy bookends, Z3 middle 10-15 min',
+     detail:'10 min easy warm-up → 10-15 min Z3 effort (comfortably hard, can speak in short sentences) → remaining time easy cool-down. Total ~30 min. This is a recovery spin not a training session — keep the Z3 block controlled.',zone:'z3'},
+    {time:'PM',title:'Long run — threshold choice',color:'#3b82f6',summary:'15-16km — increase 2-3km on last week',
+     detail:'15-16km on flat ground. Choose your run format:<br><br><div class="detail-block"><div class="detail-label">Option A — steady long run</div>Z2 throughout, conversational pace the whole way. Build aerobic base.</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option B — negative split</div>First half Z2, second half push to Z3. Like last week\'s 6km at 6:30 — that was great training.</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Option C — 400m repeats</div>10 min warm-up → 10x 400m hard / 90 sec jog → 10 min cool-down. Under 45 min total, use this if legs feel sharp.</div>',zone:'z2'},
   ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
-  gear:{label:'🎒 Pack tonight for tomorrow — swim',items:['Skins','Togs','Water bottle','Goggles','Towel','Spare clothes','Slides']},recipe:null,stretch:false},
+  gear:{label:'🎒 Pack tonight for tomorrow — assault bike + swim',items:['Gym clothes','Togs','Skins','Goggles','Water bottle','Towel','Spare clothes','Slides']},recipe:null,stretch:false},
 
-  Tuesday:{subtitle:'Assault bike + swim',sessions:[
-    {time:'AM',title:'Split squat jumps + assault bike',color:'#f97316',summary:'Power and conditioning — max effort sprints',
-     detail:'Split squat jumps 2x8 each leg → 8x 20 sec max effort / 10 sec rest → Push-ups 2x10 → Single leg RDL 3x10 → Skater jumps 2x10 each side',zone:null},
-    {time:'PM',title:'Swim — technique',color:'#10b981',summary:'Push higher intensity — quality over quantity',
-     detail:'<div class="detail-block"><div class="detail-label">Session A — drill focus</div>400m easy warm-up → 4x50m catch-up drill (15s rest) → 4x50m fingertip drag (15s rest) → 4x50m bilateral breathing (15s rest) → 6x100m on 1:45 send-off, hold 1:35 pace → 200m cool-down. ~2.2km</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Session B — threshold intervals</div>400m easy → 4x200m on 3:30 send-off strong → 4x100m on 1:45 fast → 8x25m sprint on 45 sec → 200m cool-down. ~2.3km</div>',zone:'zt'},
+  Tuesday:{subtitle:'Early assault bike + evening swim',sessions:[
+    {time:'5:45 AM',title:'Assault bike — max effort sprints',color:'#f97316',summary:'8x 20s max / 10s rest — pure power',
+     detail:'8x 20 sec max effort / 10 sec rest. Short and brutal. Push-ups 2x10 after. Keep it under 20 min total — this is a morning ignition session, not a full workout.',zone:null},
+    {time:'PM',title:'Swim — technique or intervals',color:'#10b981',summary:'2-3km — push quality, get full session in',
+     detail:'<div class="detail-block"><div class="detail-label">Session A — drill focus</div>400m easy → 4x50m catch-up drill → 4x50m fingertip drag → 4x50m bilateral breathing → 6x100m on 1:45 send-off → 200m cool-down. ~2.2km</div><div class="detail-block" style="margin-top:8px"><div class="detail-label">Session B — threshold intervals</div>400m easy → 4x200m on 3:30 strong → 4x100m on 1:45 fast → 8x25m sprint on 45 sec → 200m cool-down. ~2.3km</div>',zone:'zt'},
   ],nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)'],
-  gear:null,recipe:null,stretch:false},
+  gear:{label:'🎒 Pack tonight for tomorrow — stretch + gym + bike',items:['Gym clothes','Water bottle','Trainers']},recipe:null,stretch:false},
 
-  Wednesday:{subtitle:'Rest — no training',
-  sessions:[],
-  nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
-  gear:null,recipe:null,stretch:true},
-
-  Thursday:{subtitle:'TBD — decide based on how body feels',
-  weekNote:'Leave this flexible. Options: assault bike + easy run, gym session, or full rest if carrying fatigue into Saturday.',
-  sessions:[
-    {time:'AM',title:'Assault bike — if legs are good',color:'#f97316',summary:'12 rounds max effort — skip if carrying fatigue',
-     detail:'12x 20 sec max effort / 40 sec full rest → Push-ups 2x10 → Single leg RDL 3x10 → Isometric split squat hold with calf raise 2x30 sec each leg → Tib raises 3x20. If legs feel heavy, skip this and take a full rest day instead — Saturday is the priority.',zone:null},
+  Wednesday:{subtitle:'Early stretch + gym, evening structured bike',sessions:[
+    {time:'5:45 AM',title:'Stretch + gym activation',color:'#ec4899',summary:'Full stretch routine + bodyweight exercises',
+     detail:'Full stretch routine (see below) → Split squat jumps 2x8 each leg → Single leg RDL 3x10 → Skater jumps 2x10 → Isometric split squat hold with calf raise 2x30 sec → Tib raises 3x20 → Copenhagen raises 3x8 → Push-ups 2x10 → Banded pull-ups 2x8',zone:null},
+    {time:'PM',title:'Structured bike — threshold + all-out',color:'#f59e0b',summary:'90 min — sustained threshold then max effort finishers',
+     detail:'20 min easy spin warm-up → 20 min at threshold Z3-4 (hard but controlled, hold the effort) → 10 min easy spin → 4x 3 min all-out / 2 min easy → 10 min cool-down. Total ~85 min.<br><br>The threshold block is the most important part — if you can only do one thing well today, make it those 20 min. The all-out finishers are a bonus when legs are still there.',zone:'z4'},
   ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
-  gear:{label:'🎒 Pack tonight for tomorrow — swim',items:['Skins','Togs','Water bottle','Goggles','Towel','Spare clothes','Slides']},recipe:null,stretch:true},
+  gear:{label:'🎒 Pack tonight for tomorrow — morning run + gym + sauna',items:['NB 1080s','Running clothes','Gym clothes','Water bottle','Towel','Spare clothes']},recipe:null,stretch:true},
 
-  Friday:{subtitle:'Sleep in + swim + stretch',sessions:[
+  Thursday:{subtitle:'Early run + evening gym + sauna',sessions:[
+    {time:'5:45 AM',title:'Short morning run',color:'#3b82f6',summary:'5-10km easy — active recovery after Wednesday bike',
+     detail:'5-10km on flat ground. Keep it genuinely easy — this is active recovery after Wednesday\'s hard bike session. Z2 only, conversational pace. If legs feel heavy from Wednesday, go 5km and call it done.',zone:'z2'},
+    {time:'PM',title:'Gym — legs + sauna',color:'#a78bfa',summary:'Full leg session then sauna recovery',
+     detail:'Box jumps 3x5 → Back squats 3x4 heavy → Bulgarian split squats 3x8 → Single leg step down 3x10 → Lateral lunge 3x10 → Single leg hip bridge 3x12 → Bent knee calf raises 3x15 slow eccentric → Copenhagen raises 3x8<br><br>Sauna after — 15-20 min. Good recovery for the legs ahead of Friday swim and Saturday ride.',zone:null},
+  ],nightly:['Push-ups','Banded pull-ups','Tricep dips','Reverse plank','Tib raises','5 min stretch'],
+  gear:{label:'🎒 Pack tonight for tomorrow — swim',items:['Skins','Togs','Goggles','Water bottle','Towel','Spare clothes','Slides']},recipe:null,stretch:false},
+
+  Friday:{subtitle:'Light morning + long swim',sessions:[
     {time:'AM',title:'5 min gentle wake-up only',color:'#94a3b8',summary:'Minimal movement — rest before the swim',
-     detail:"Superman 2x10 → Thoracic rotation stretch 30 sec each side → Deep squat hold 30 sec.",zone:null},
-    {time:'PM',title:'Swim — 3x1200m build sets',color:'#10b981',summary:'3.6km split into build sets — technique and pace focus',
-     detail:'<div class="detail-block"><div class="detail-label">Main set — 3x1200m with 90 sec rest between</div>Each 1200m broken as:<br>400m easy / relaxed stroke focus<br>400m build — gradually increase pace<br>400m strong — hold your best sustainable pace<br><br>This builds pace control and teaches you to negative split — critical for the Ironman swim. Rest 90 sec between each 1200m. Total with warm-up and cool-down: ~4km</div>',zone:'zt'},
-    {time:'PM',title:'Full body stretch — post swim while warm',color:'#ec4899',summary:'20-30 min full body — hips, calves, spine and back',
+     detail:'Superman 2x10 → Thoracic rotation 30 sec each side → Deep squat hold 30 sec. Nothing hard.',zone:null},
+    {time:'PM',title:'Swim — 3x1200m build sets',color:'#10b981',summary:'3.6km — pace control and negative split focus',
+     detail:'400m easy warm-up → 3x1200m with 90 sec rest between each:<br><br><div class="detail-block"><div class="detail-label">Each 1200m broken as</div>400m easy / relaxed stroke focus<br>400m build — gradually increase pace<br>400m strong — hold best sustainable pace</div><br>200m easy cool-down. Total ~4km. Focus on the back 400m of each rep being faster than the front — that\'s the skill that transfers to race day.',zone:'zt'},
+    {time:'PM',title:'Full body stretch — post swim while warm',color:'#ec4899',summary:'20-30 min full body — hips, calves, spine, back',
      detail:"Cat-cow 10 reps → 90/90 hip stretch 60 sec each side → Pigeon pose 60 sec each → Standing hip flexor lunge 45 sec each → Hamstring seated stretch 45 sec each → Thoracic opener 60 sec → Soleus stretch bent-knee 45 sec each → Straight calf stretch 45 sec each → Child's pose 60 sec → Static Copenhagen plank hold 20-30 sec each side",zone:null},
   ],nightly:['Push-ups','Banded pull-ups','Reverse plank','Tib raises','5 min stretch','(skip dips — swim tonight)'],
-  gear:{label:'🎒 Pack tonight for tomorrow — long ride',items:['Gels','Bars and lollies','Water bottle','Lights','Repair bag','Sunglasses','Bumbag (ride essentials)','Nutrition bag (food + fuel)']},recipe:null,stretch:false},
+  gear:{label:'🎒 Pack tonight for tomorrow — long ride',items:['Gels','Bars and lollies','Water bottle','Lights','Repair bag','Sunglasses','Bumbag','Nutrition bag']},recipe:null,stretch:false},
 
-  Saturday:{subtitle:'Long ride 120km — if legs allow',
-  weekNote:'Only push to 120km if the body feels good by Friday. If legs are still carrying fatigue, 90-100km is a better call. No point grinding out 120km at the cost of next week.',
-  sessions:[
-    {time:'AM',title:'Long outdoor ride + brick run',color:'#f59e0b',summary:'120km target — reduce if legs aren\'t right',
-     detail:'120km if legs are good, 90-100km if not. Mix of flat and manageable climbing. Fuel every 45 min using the BTA mount while moving. Target 22-24 km/h average. Add 15-20 min easy brick run immediately off bike — no changing kit.',zone:'z2'},
+  Saturday:{subtitle:'Long outdoor ride + brick run',sessions:[
+    {time:'AM',title:'Long outdoor ride + brick run',color:'#f59e0b',summary:'Build distance — fuel every 45 min, brick run after',
+     detail:'Target distance based on how the week has gone. Aim for 80-100km. Mix of flat and manageable climbing. Fuel every 45 min using BTA mount while moving. Add 15-20 min easy brick run immediately off bike — no changing kit.',zone:'z2'},
   ],nightly:['Push-ups','Tib raises','5 min stretch','(skip dips + pull-ups — rest upper body)'],
   gear:null,recipe:null,stretch:false},
 
   Sunday:{subtitle:'Full rest + weekly review',sessions:[],nightly:[],
-  gear:{label:'🎒 Pack tonight for tomorrow — run + sauna',items:['NB 1080s','Water bottle + electrolytes','Running clothes','Towel','Spare clothes (post sauna)','Slides']},
+  gear:{label:'🎒 Pack tonight for tomorrow — early spin + long run',items:['Gym clothes','Running shoes (NB 1080s)','Water bottle + electrolytes','Towel']},
   recipe:OATS_RECIPE,stretch:false}
 };
 
@@ -229,7 +228,7 @@ function renderDay(){
       <div class="rest-card">
         <div class="rest-emoji">😴</div>
         <div class="rest-title">Full rest day</div>
-        <div class="rest-sub">Adaptation happens here. Light walk only if needed.<br><br>Sunday PM — check in with Claude, review last week, plan the week ahead.</div>
+        <div class="rest-sub">Adaptation happens here. Light walk only if needed.<br><br>Sunday PM — check in with Claude, review last week, plan ahead.</div>
       </div>`;
     if(plan.gear){
       const checked=getGear(dayName);
@@ -246,10 +245,6 @@ function renderDay(){
   let html=`<div class="day-header"><div class="day-name">${dayName}</div><div class="day-subtitle">${plan.subtitle}</div></div>`;
   if(plan.weekNote) html+=`<div class="week-note">⚠️ ${plan.weekNote}</div>`;
 
-  if(plan.sessions.length===0&&dayName==='Wednesday'){
-    html+=`<div class="rest-card" style="margin-bottom:10px"><div class="rest-emoji">🧘</div><div class="rest-title">Rest day</div><div class="rest-sub">No structured training today. Use the stretch routine below if you have time — it'll help the legs recover for the weekend.</div></div>`;
-  }
-
   plan.sessions.forEach((s,i)=>{
     const log=getLog(dayName,i);
     const isDone=log&&log.done;
@@ -261,7 +256,7 @@ function renderDay(){
   }
 
   if(plan.stretch){
-    html+=`<div class="stretch-section"><div class="stretch-title">🧘 Stretch routine — do this today</div>${STRETCH_ROUTINE.map(s=>`<div class="stretch-item"><div class="stretch-dot"></div>${s}</div>`).join('')}</div>`;
+    html+=`<div class="stretch-section"><div class="stretch-title">🧘 Stretch routine</div>${STRETCH_ROUTINE.map(s=>`<div class="stretch-item"><div class="stretch-dot"></div>${s}</div>`).join('')}</div>`;
   }
 
   if(plan.gear){
